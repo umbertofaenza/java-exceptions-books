@@ -1,16 +1,28 @@
 package org.learning.javaexceptionsbooks;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("How many books would you like to add? ");
-        int size = Integer.parseInt(scan.nextLine());
-
+        boolean validInput = false;
+        int size = 1;
         Book[] books = new Book[size];
+        do {
+            System.out.print("How many books would you like to add? ");
+
+            try {
+                size = Integer.parseInt(scan.nextLine());
+                books = new Book[size];
+                validInput = true;
+            } catch (RuntimeException e) {
+                System.out.println("Invalid number.");
+            }
+        } while (!validInput);
+
 
         for (int i = 0; i < size; i++) {
 
@@ -40,7 +52,7 @@ public class Main {
                     Book b = new Book(title, author, publisher, numOfPages);
                     books[i] = b;
                     bookIsValid = true;
-                    scan.close();
+
                 } catch(IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                 }
@@ -48,14 +60,14 @@ public class Main {
         }
 
         File data = new File("./resources/data.txt");
-        for(Book book : books) {
-            try {
-                FileWriter fileWriter = new FileWriter(data);
-                fileWriter.write(book.toString());
-                fileWriter.close();
-            } catch (IOException e) {
-                System.out.println("Unable to write file.");
+        try {
+            FileWriter fileWriter = new FileWriter(data);
+            for(Book book : books) {
+                fileWriter.write(book.toString() + "\n");
             }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Unable to write file.");
         }
 
         try {
@@ -68,5 +80,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to read file.");
         }
+
+        scan.close();
     }
 }
