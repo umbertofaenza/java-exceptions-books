@@ -5,7 +5,8 @@ public class Book {
     private int numOfPages;
 
     public Book(String title, String author, String publisher, int numOfPages) throws IllegalArgumentException {
-        if(title.trim().isEmpty() || author.trim().isEmpty() || publisher.trim().isEmpty() || numOfPages <= 0) {
+        if(title == null || title.trim().isEmpty() || author == null || author.trim().isEmpty()
+                || publisher == null || publisher.trim().isEmpty() || numOfPages <= 0) {
             throw new IllegalArgumentException("Invalid data entered. Book was not created.");
         }
 
@@ -20,8 +21,8 @@ public class Book {
     }
 
     public void setTitle(String title) throws IllegalArgumentException {
-        if(title.trim().isEmpty()) {
-            throw new IllegalArgumentException("Title can't empty");
+        if(title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid title.");
         }
 
         this.title = title;
@@ -32,8 +33,8 @@ public class Book {
     }
 
     public void setAuthor(String author) throws IllegalArgumentException {
-        if(author.trim().isEmpty()) {
-            throw new IllegalArgumentException("Author can't be empty");
+        if(author == null || author.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid author.");
         }
 
         this.author = author;
@@ -44,8 +45,8 @@ public class Book {
     }
 
     public void setPublisher(String publisher) throws IllegalArgumentException {
-        if(publisher.trim().isEmpty()) {
-            throw new IllegalArgumentException("Publisher can't be empty");
+        if(publisher == null || publisher.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid publisher.");
         }
 
         this.publisher = publisher;
@@ -57,7 +58,7 @@ public class Book {
 
     public void setNumOfPages(int numOfPages) throws IllegalArgumentException {
         if(numOfPages <= 0) {
-            throw new IllegalArgumentException("Number of pages can't be <= 0");
+            throw new IllegalArgumentException("Invalid number.");
         }
 
         this.numOfPages = numOfPages;
