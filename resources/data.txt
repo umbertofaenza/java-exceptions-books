@@ -1,0 +1,1 @@
+Book{title='Accabadora', author='Michela Murgia', publisher='Einaudi', numOfPages=166}

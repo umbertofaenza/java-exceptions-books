@@ -1,6 +1,6 @@
 package org.learning.javaexceptionsbooks;
 
-import java.util.Arrays;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
@@ -33,23 +33,40 @@ public class Main {
                 try {
                     numOfPages = Integer.parseInt(scan.nextLine());
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid number entered.");;
+                    System.out.println("Invalid number entered.");
                 }
 
                 try {
                     Book b = new Book(title, author, publisher, numOfPages);
                     books[i] = b;
                     bookIsValid = true;
+                    scan.close();
                 } catch(IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                 }
             } while(!bookIsValid);
         }
 
-        for (Book book : books) {
-            System.out.println(book.toString());
+        File data = new File("./resources/data.txt");
+        for(Book book : books) {
+            try {
+                FileWriter fileWriter = new FileWriter(data);
+                fileWriter.write(book.toString());
+                fileWriter.close();
+            } catch (IOException e) {
+                System.out.println("Unable to write file.");
+            }
         }
 
-        scan.close();
+        try {
+            Scanner fileReader = new Scanner(data);
+            while(fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                System.out.println(line);
+            }
+            scan.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to read file.");
+        }
     }
 }
