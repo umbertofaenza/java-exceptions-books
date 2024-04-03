@@ -1,7 +1,6 @@
 package org.learning.javaexceptionsbooks;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
